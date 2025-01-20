@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Image Viewer</title>
+  <style>
+    /* Basic styles for the viewer */
+    #image-viewer {
+      position: relative;
+      width: 100%;
+      max-width: 800px;
+      margin: 0 auto;
+      overflow: hidden;
+      border: 1px solid #ccc;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    #main-image {
+      width: 100%;
+      height: auto;
+      cursor: grab;
+      transition: transform 0.2s ease;
+    }
+  </style>
+</head>
+<body>
+  <div id="image-viewer">
+    <img id="main-image" src="https://github.com/Yaeyata/test/blob/4d879241adfb3e80b0dfcf0c5f4630291e3c3a92/3099-200.jpg">
+  </div>
+  <script>
+    // Add pan functionality
+    const mainImage = document.getElementById('main-image');
+    let isPanning = false;
+    let startX, startY, translateX = 0, translateY = 0;
+
+    mainImage.addEventListener('mousedown', (e) => {
+      isPanning = true;
+      startX = e.clientX - translateX;
+      startY = e.clientY - translateY;
+      mainImage.style.cursor = 'grabbing';
+    });
+
+    mainImage.addEventListener('mousemove', (e) => {
+      if (!isPanning) return;
+      translateX = e.clientX - startX;
+      translateY = e.clientY - startY;
+      mainImage.style.transform = `translate(${translateX}px, ${translateY}px)`;
+    });
+
+    mainImage.addEventListener('mouseup', () => {
+      isPanning = false;
+      mainImage.style.cursor = 'grab';
+    });
+
+    mainImage.addEventListener('mouseleave', () => {
+      isPanning = false;
+      mainImage.style.cursor = 'grab';
+    });
+  </script>
+</body>
+</html>
